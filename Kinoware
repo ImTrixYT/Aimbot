@@ -1,15 +1,15 @@
 getgenv().OldAimPart = "UpperTorso"
 getgenv().AimPart = "UpperTorso" -- For R15 Games: {UpperTorso, LowerTorso, HumanoidRootPart, Head} | For R6 Games: {Head, Torso, HumanoidRootPart}  
-    getgenv().AimbotKey = "c"
+    getgenv().CamlockKey = "c"
     getgenv().AimRadius = 30 -- How far away from someones character you want to lock on at
     getgenv().TPP_CHECK = true 
     getgenv().FPP_CHECK = true
     getgenv().TeamCheck = false -- Check if Target is on your Team (True means it wont lock onto your teamates, false is vice versa) (Set it to false if there are no teams)
-    getgenv().PredictMovement = true -- Predicts if they are moving in fast velocity (like jumping) so the aimbot will go a bit faster to match their speed 
-    getgenv().PredictionVelocity = 6.612
-    getgenv().CheckIfJumped = true
+    getgenv().AutoPrediction = true -- Predicts if they are moving in fast velocity (like jumping) so the aimbot will go a bit faster to match their speed 
+    getgenv().Prediction = 6.612
+    getgenv().Airshots = true
     getgenv().Smoothness = true
-    getgenv().SmoothnessAmount = 0.015
+    getgenv().SmoothnessRate = 0.015
 
     local Players, Uis, RService, SGui = game:GetService"Players", game:GetService"UserInputService", game:GetService"RunService", game:GetService"StarterGui";
     local Client, Mouse, Camera, CF, RNew, Vec3, Vec2 = Players.LocalPlayer, Players.LocalPlayer:GetMouse(), workspace.CurrentCamera, CFrame.new, Ray.new, Vector3.new, Vector2.new;
@@ -92,7 +92,7 @@ getgenv().AimPart = "UpperTorso" -- For R15 Games: {UpperTorso, LowerTorso, Huma
     
     Mouse.KeyDown:Connect(function(a)
         if not (Uis:GetFocusedTextBox()) then 
-            if a == AimlockKey and AimlockTarget == nil then
+            if a == CamlockKey and AimlockTarget == nil then
                 pcall(function()
                     if MousePressed ~= true then MousePressed = true end 
                     local Target;Target = GetNearestTarget()
@@ -100,7 +100,7 @@ getgenv().AimPart = "UpperTorso" -- For R15 Games: {UpperTorso, LowerTorso, Huma
                         AimlockTarget = Target
                     end
                 end)
-            elseif a == AimlockKey and AimlockTarget ~= nil then
+            elseif a == CamlockKey and AimlockTarget ~= nil then
                 if AimlockTarget ~= nil then AimlockTarget = nil end
                 if MousePressed ~= false then 
                     MousePressed = false 
@@ -139,7 +139,7 @@ getgenv().AimPart = "UpperTorso" -- For R15 Games: {UpperTorso, LowerTorso, Huma
                                 local Main = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
                                 
                                 --// Making it work \\--
-                                Camera.CFrame = Camera.CFrame:Lerp(Main, getgenv().SmoothnessAmount, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
+                                Camera.CFrame = Camera.CFrame:Lerp(Main, getgenv().SmoothnessRate , Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
                             else
                                 Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position + AimlockTarget.Character[getgenv().AimPart].Velocity/PredictionVelocity)
                             end
@@ -149,7 +149,7 @@ getgenv().AimPart = "UpperTorso" -- For R15 Games: {UpperTorso, LowerTorso, Huma
                                 local Main = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
 
                                 --// Making it work \\--
-                                Camera.CFrame = Camera.CFrame:Lerp(Main, getgenv().SmoothnessAmount, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
+                                Camera.CFrame = Camera.CFrame:Lerp(Main, getgenv().SmoothnessRate , Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
                             else
                                 Camera.CFrame = CF(Camera.CFrame.p, AimlockTarget.Character[getgenv().AimPart].Position)
                             end
@@ -158,7 +158,7 @@ getgenv().AimPart = "UpperTorso" -- For R15 Games: {UpperTorso, LowerTorso, Huma
                 end
             end
         end
-         if CheckIfJumped == true then
+         if Airshots == true then
        if AimlockTarget.Character.HuDDDDDDDDDDWmanoid.FloorMaterial == Enum.Material.Air then
     
            getgenv().AimPart = "UpperTorso"
